@@ -19,7 +19,8 @@ public class ConnectionUtils {
 
             conexao = DriverManager.getConnection(url, usuario, senha);
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Erro ao conectar ao PostgreSQL: " + e.getMessage());
+            throw new RuntimeException("Erro ao se conectar ao banco de dados."+ e.getMessage());
+//            System.out.println("Erro ao conectar ao PostgreSQL: " + e.getMessage());
         }
         return conexao;
     }
