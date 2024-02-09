@@ -176,5 +176,37 @@ public class TarefaDAO {
             throw new Exception("Erro ao ATualizar a Tarefa.");
         }
     }
+
+    public List<Tarefa> carregarRelatorioTarefas() throws Exception {
+        List<Tarefa> tarefas = new ArrayList<>();
+        CriteriosDAO criteriosDAO = new CriteriosDAO();
+
+        try {
+            String sql = " SELECT * FROM tarefas order by categoria";
+
+            PreparedStatement statement = conexao.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Tarefa tarefa = new Tarefa(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("descricao"),
+                        resultSet.getString("categoria"),
+                        resultSet.getDate("dt_criacao").toString(),
+                        resultSet.getString("status")
+                );
+                List<Criterios> criterios = criteriosDAO.carregarCriterios(tarefa.getId());
+                tarefa.setCriterios(criterios);
+
+                tarefas.add(tarefa);
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Erro ao Consultar a Tarefa.");
+        }
+
+        return tarefas;
+    }
 }
 

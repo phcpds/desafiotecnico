@@ -12,6 +12,7 @@ import java.util.List;
 public class ListaTarefas extends JDialog {
 
     private JPanel pnlPrincipal;
+    private JPanel panelTelaLista;
     private JTable tableTarefas;
     private JButton btnSair;
     private JButton btnIncluir;
@@ -26,19 +27,14 @@ public class ListaTarefas extends JDialog {
         return modeloTabela;
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("ListaTarefas");
-        frame.setContentPane(new ListaTarefas().pnlPrincipal);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo();
-        frame.pack();
-        frame.setVisible(true);
-
-    }
-
     public ListaTarefas() {
 
         setSize(600, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Carregua a interface gráfica
+        carregarUI();
+
         // Define as colunas da tabela
         modeloTabela.addColumn("ID");
         modeloTabela.addColumn("Nome");
@@ -64,7 +60,7 @@ public class ListaTarefas extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Fecha a janela
-                System.exit(0); // Encerra a aplicação
+//                System.exit(0); // Encerra a aplicação
             }
         });
         btnExcluir.addActionListener(new ActionListener() {
@@ -110,6 +106,7 @@ public class ListaTarefas extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CadastroTarefas cadastro = new CadastroTarefas(0);
+                cadastro.setLocationRelativeTo(null);
                 cadastro.setVisible(true);
 
                 carregarTarefas(modeloTabela);
@@ -123,6 +120,7 @@ public class ListaTarefas extends JDialog {
                 if (rowIndex != -1) {
                     Object idTarefa = tableTarefas.getValueAt(rowIndex, 0);
                     CadastroTarefas cadastro = new CadastroTarefas((int) idTarefa);
+                    cadastro.setLocationRelativeTo(null);
                     cadastro.setVisible(true);
 
                     carregarTarefas(modeloTabela);
@@ -154,4 +152,10 @@ public class ListaTarefas extends JDialog {
 
     }
 
+    private void carregarUI() {
+        if (panelTelaLista == null) {
+            panelTelaLista = this.pnlPrincipal;
+            add(panelTelaLista);
+        }
+    }
 }

@@ -41,10 +41,9 @@ public class CadastroTarefas extends JFrame {
     private DefaultTableModel modeloTabela;
 
     public CadastroTarefas(int idTarefa) {
-//        setLocationRelativeTo(null);
+
         setSize(500, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Carregua a interface gráfica
         carregarUI();
